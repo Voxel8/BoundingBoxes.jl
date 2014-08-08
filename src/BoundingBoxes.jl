@@ -62,10 +62,10 @@ macro boundingbox(ex)
     quote
         $(esc(bound)) # create bounding box type
         $(esc(equality)) # create equality method (==)
-        $(esc(empty_bounds)) # create empty bounds (Bounds(T))
         $(esc(promote_bounds)) # create arg promoting method
         $(esc(update_bounds)) # create method for updating against AbstractArray
         $(esc(isinside_bounds)) # create isinside method
+        $(esc(empty_bounds)) # create empty bounds (Bounds(T))
     end
 end
 
