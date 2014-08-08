@@ -51,7 +51,7 @@ macro boundingbox(ex)
         $(esc(equality)) # create equality method (==)
         $(esc(empty_bounds)) # create empty bounds (Bounds(T))
         $(esc(promote_bounds)) # create arg promoting method
-        $(esc(update_bounds))
+        $(esc(update_bounds)) # create method for updating against AbstractArray
     end
 end
 
