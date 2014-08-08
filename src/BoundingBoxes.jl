@@ -24,8 +24,8 @@ macro boundingbox(ex)
     equality = Expr(:function, eq_args, eq_block)
 
     # construct empty bounds
-    empty_max = [Expr(:call, :typemax, :T) for i = 1:length(axes)]
-    empty_min = [Expr(:call, :typemin, :T) for i = 1:length(axes)]
+    empty_max = [Expr(:call, :typemin, :T) for i = 1:length(axes)]
+    empty_min = [Expr(:call, :typemax, :T) for i = 1:length(axes)]
     empty_bounds = :($(bound_name)(T) = $(bound_name){T}($(empty_max...), $(empty_min...)))
 
     # promotion handling function
@@ -33,13 +33,25 @@ macro boundingbox(ex)
 
     # construct bounds updating
     update_args = :(update!(a::$(bound_name), b::AbstractArray))
-
+    update_body = [Expr(:(=), dots("a", "_max", axes[i]),
+                        Expr(:call,
+                            :(max), dots("a", "_max", axes[i]),
+                            Expr(:ref, :b, i))
+                        ) for i = 1:length(axes)]
+    append!(update_body, [Expr(:(=), dots("a", "_min", axes[i]),
+                            Expr(:call,
+                                    :(min), dots("a", "_min", axes[i]),
+                                    Expr(:ref, :b, i))
+                            ) for i = 1:length(axes)])
+    update_block = Expr(:block, update_body...)
+    update_bounds = Expr(:function, update_args, update_block)
 
     quote
         $(esc(bound)) # create bounding box type
         $(esc(equality)) # create equality method (==)
         $(esc(empty_bounds)) # create empty bounds (Bounds(T))
         $(esc(promote_bounds)) # create arg promoting method
+        $(esc(update_bounds))
     end
 end
 

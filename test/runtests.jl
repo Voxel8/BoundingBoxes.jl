@@ -29,7 +29,7 @@ bb2e = Bounds2I{Int64}(4,3,2,1)
 # test empty bounds
 bb2f = Bounds2I(Float64)
 
-@test bb2f == Bounds2I{Float64}(Inf,Inf,-Inf,-Inf)
+@test bb2f == Bounds2I{Float64}(-Inf,-Inf,Inf,Inf)
 @test typeof(bb2f) == Bounds2I{Float64}
 
 # test arg promoting
@@ -38,3 +38,15 @@ bb2a = Bounds2I(1,2,3,4.0)
 
 bb2b = Bounds2I(1,2,3,4.0+im)
 @test typeof(bb2b) == Bounds2I{Complex{Float64}}
+
+# test bounds updating
+@boundingbox Bounds2, "x", "y", "z"
+bb2a = Bounds2(Float64)
+update!(bb2a, [1,2,3])
+update!(bb2a, [4,5,6])
+@test bb2a.x_max == 4
+@test bb2a.y_max == 5
+@test bb2a.z_max == 6
+@test bb2a.x_min == 1
+@test bb2a.y_min == 2
+@test bb2a.z_min == 3
