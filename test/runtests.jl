@@ -42,7 +42,7 @@ bb2b = Bounds2I(1,2,3,4.0+im)
 # test bounds updating
 @boundingbox Bounds3, "x", "y", "z"
 bb3a = Bounds3(Float64)
-update!(bb3a, [1,2,3])
+@test update!(bb3a, [1,2,3]) == nothing
 update!(bb3a, [4,5,6])
 @test bb3a.x_max == 4
 @test bb3a.y_max == 5

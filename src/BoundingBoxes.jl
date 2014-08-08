@@ -43,7 +43,7 @@ macro boundingbox(ex)
                                     :(min), dots("a", "_min", axes[i]),
                                     Expr(:ref, :b, i))
                             ) for i = 1:length(axes)])
-    update_block = Expr(:block, update_body...)
+    update_block = Expr(:block, update_body..., :(return nothing))
     update_bounds = Expr(:function, update_args, update_block)
 
     # construct isinside (b isinside a)
