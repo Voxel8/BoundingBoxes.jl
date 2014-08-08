@@ -25,3 +25,9 @@ bb2e = Bounds2I{Int64}(4,3,2,1)
 
 @test bb2i == bb2e
 @test bb2i != bb2f
+
+# test empty bounds
+bb2f = Bounds2I(Float64)
+
+@test bb2f == Bounds2I{Float64}(Inf,Inf,-Inf,-Inf)
+@test typeof(bb2f) == Bounds2I{Float64}
