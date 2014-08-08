@@ -46,12 +46,26 @@ macro boundingbox(ex)
     update_block = Expr(:block, update_body...)
     update_bounds = Expr(:function, update_args, update_block)
 
+    # construct isinside (b isinside a)
+    isinside_eqs = [Expr(:call, :(>),
+                 dots("a", "_max", axe),
+                 dots("b", "_max", axe)) for axe in axes]
+    append!(isinside_eqs, [Expr(:call, :(<),
+                 dots("a", "_min", axe),
+                 dots("b", "_min", axe)) for axe in axes])
+    isinside_return = Expr(:return, andlist(isinside_eqs))
+    isinside_block = Expr(:block, isinside_return)
+    isinside_args = :(isinside(a::$(bound_name), b::$(bound_name)))
+    isinside_bounds = Expr(:function, isinside_args, isinside_block)
+
+
     quote
         $(esc(bound)) # create bounding box type
         $(esc(equality)) # create equality method (==)
         $(esc(empty_bounds)) # create empty bounds (Bounds(T))
         $(esc(promote_bounds)) # create arg promoting method
         $(esc(update_bounds)) # create method for updating against AbstractArray
+        $(esc(isinside_bounds)) # create isinside method
     end
 end
 
