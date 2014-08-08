@@ -14,4 +14,9 @@ before_install:
   - sudo apt-get install libpcre3-dev julia -y
   - if [[ -a .git/shallow ]]; then git fetch --unshallow; fi
 script:
-  - julia -e 'Pkg.init(); Pkg.clone(pwd()); Pkg.test("BoundingBoxes")'
+  - julia -e 'Pkg.init(); run(`ln -s $(pwd()) $(Pkg.dir("BoundingBoxes"))`); Pkg.pin("BoundingBoxes"); Pkg.resolve()'
+  - cd ./test
+  - if [ $JULIAVERSION = "julianightlies" ]; then julia --code-coverage runtests.jl; fi
+  - if [ $JULIAVERSION = "juliareleases" ]; then julia runtests.jl; fi
+after_success:
+  - if [ $JULIAVERSION = "julianightlies" ]; then julia -e 'cd(Pkg.dir("BoundingBoxes")); Pkg.add("Coverage"); using Coverage; Coveralls.submit(Coveralls.process_folder())'; fi
