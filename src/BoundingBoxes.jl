@@ -28,12 +28,18 @@ macro boundingbox(ex)
     empty_min = [Expr(:call, :typemin, :T) for i = 1:length(axes)]
     empty_bounds = :($(bound_name)(T) = $(bound_name){T}($(empty_max...), $(empty_min...)))
 
+    # promotion handling function
+    promote_bounds = :($(bound_name)(x...) = $(bound_name)(promote(x...)...))
+
     # construct bounds updating
+    update_args = :(update!(a::$(bound_name), b::AbstractArray))
+
 
     quote
         $(esc(bound)) # create bounding box type
         $(esc(equality)) # create equality method (==)
         $(esc(empty_bounds)) # create empty bounds (Bounds(T))
+        $(esc(promote_bounds)) # create arg promoting method
     end
 end
 

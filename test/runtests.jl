@@ -31,3 +31,10 @@ bb2f = Bounds2I(Float64)
 
 @test bb2f == Bounds2I{Float64}(Inf,Inf,-Inf,-Inf)
 @test typeof(bb2f) == Bounds2I{Float64}
+
+# test arg promoting
+bb2a = Bounds2I(1,2,3,4.0)
+@test typeof(bb2a) == Bounds2I{Float64}
+
+bb2b = Bounds2I(1,2,3,4.0+im)
+@test typeof(bb2b) == Bounds2I{Complex{Float64}}
