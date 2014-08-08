@@ -24,4 +24,4 @@ bb2i = Bounds2I{Int64}(4,3,2,1)
 bb2e = Bounds2I{Int64}(4,3,2,1)
 
 @test bb2i == bb2e
-
+@test bb2i != bb2f
