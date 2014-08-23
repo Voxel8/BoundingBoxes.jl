@@ -31,7 +31,7 @@ julia> names(Bounds2)
 ```
 The macro create the composite type with a maximum and minimum member, which is just the axis name with a `"_max"` and `"_min"` suffix.
 
-Let's see how se can use the `Bounds2` type we just created.
+Let's see how we can use the `Bounds2` type we just created.
 ```
 julia> methods(Bounds2)
 # 3 methods for generic function "Bounds2":
@@ -51,7 +51,7 @@ Bounds2{Int64}(1,2,3,4)
 julia> Bounds2(int8(1),2,float32(3),float64(4.1))
 Bounds2{Float64}(1.0,2.0,3.0,4.1)
 ```
-There are two main ways. The first is an empty construction, which is just defined by a type. It creates the bounds with the maximums set to the `typemin` and the maximums set to the `typemax`. This ensures that when we update the bounds, everything is either larger or greater then the element. The second way of creating a bounds is to just instantiate the type directly. As you can see, type promotion is handled so the bounds all have uniform types.
+There are two main ways. The first is an empty construction, which is just defined by a type. It creates the bounds with the maximums set to the `typemin` and the maximums set to the `typemax`. This ensures that when we update the bounds everything is either greater than, or less than, the element. The second way of creating a bounds is to instantiate the type directly. Type promotion is handled so the bounds all have uniform types.
 
 We can also update the bounds:
 ```
@@ -70,7 +70,7 @@ julia> Bounds2(2,2,0,0) == Bounds2(2.0,2.0,0.0,0.0)
 true
 ```
 
-Finally we can see if a bounds is inside another one:
+Finally, we can see if a bounds is inside another one:
 ```
 julia> isinside(Bounds2(3,3,0,0), Bounds2(2,2,1,1))
 true
