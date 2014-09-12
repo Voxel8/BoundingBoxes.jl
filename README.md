@@ -1,7 +1,7 @@
 # BoundingBoxes
 
-[![Build Status](https://travis-ci.org/sjkelly/BoundingBoxes.jl.svg?branch=master)](https://travis-ci.org/sjkelly/BoundingBoxes.jl)
-[![Coverage Status](https://img.shields.io/coveralls/sjkelly/BoundingBoxes.jl.svg)](https://coveralls.io/r/sjkelly/BoundingBoxes.jl)
+[![Build Status](https://travis-ci.org/voxel8/BoundingBoxes.jl.svg?branch=master)](https://travis-ci.org/voxel8/BoundingBoxes.jl)
+[![Coverage Status](https://img.shields.io/coveralls/voxel8/BoundingBoxes.jl.svg)](https://coveralls.io/r/voxel8/BoundingBoxes.jl)
 
 BoundingBoxes.jl is a Julia package for quickly defining bounding box types and methods.
 
