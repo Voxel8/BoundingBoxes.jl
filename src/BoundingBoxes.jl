@@ -46,13 +46,13 @@ macro boundingbox(ex)
     update_block = Expr(:block, update_body..., :(return nothing))
     update_bounds = Expr(:function, update_args, update_block)
 
-    # construct isinside (b isinside a)
+    # construct isinside (a isinside b)
     isinside_eqs = [Expr(:call, :(>),
-                 dots("a", "_max", axe),
-                 dots("b", "_max", axe)) for axe in axes]
+                 dots("b", "_max", axe),
+                 dots("a", "_max", axe)) for axe in axes]
     append!(isinside_eqs, [Expr(:call, :(<),
-                 dots("a", "_min", axe),
-                 dots("b", "_min", axe)) for axe in axes])
+                 dots("b", "_min", axe),
+                 dots("a", "_min", axe)) for axe in axes])
     isinside_return = Expr(:return, andlist(isinside_eqs))
     isinside_block = Expr(:block, isinside_return)
     isinside_args = :(isinside(a::$(bound_name), b::$(bound_name)))

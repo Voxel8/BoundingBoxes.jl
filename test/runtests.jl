@@ -52,8 +52,8 @@ update!(bb3a, [4,5,6])
 @test bb3a.z_min == 3
 
 # test isinside
-bb3a = Bounds3{Float64}(1,1,1,0,0,0)
-bb3b = Bounds3{Float64}(0.5,0.5,0.5,0.25,0.25,0.25)
+bb3a = Bounds3{Float64}(0.5,0.5,0.5,0.25,0.25,0.25)
+bb3b = Bounds3{Float64}(1,1,1,0,0,0)
 @test isinside(bb3a,bb3b)
 @test !isinside(bb3b,bb3a)
 
