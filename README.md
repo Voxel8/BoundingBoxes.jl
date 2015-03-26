@@ -72,10 +72,10 @@ true
 
 Finally, we can see if a bounds is inside another one:
 ```
-julia> isinside(Bounds2(2,2,1,1), Bounds2(3,3,0,0))
+julia> in(Bounds2(2,2,1,1), Bounds2(3,3,0,0))
 true
 
-julia> isinside(Bounds2(2,2,-1,-1), Bounds2(3,3,0,0))
+julia> in(Bounds2(2,2,-1,-1), Bounds2(3,3,0,0))
 false
 ```
 
