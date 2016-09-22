@@ -6,8 +6,8 @@ macro boundingbox(ex)
     bound_name = ex.args[1]
     axes = ex.args[2:end]
     # construct Bounding Box type
-    types = [Expr(:(::),symbol(axe*"_max"),:T) for axe in axes]
-    append!(types,[Expr(:(::),symbol(axe*"_min"),:T) for axe in axes])
+    types = [Expr(:(::),Symbol(axe*"_max"),:T) for axe in axes]
+    append!(types,[Expr(:(::),Symbol(axe*"_min"),:T) for axe in axes])
     curly = Expr(:curly, bound_name, Expr(:(<:), :T, :Number))
     bound = Expr(:type, true, curly, Expr(:block, types...))
 
@@ -71,7 +71,7 @@ end
 
 # member access
 function dots(parent, elt, axe)
-    return Expr(:(.), symbol(parent), QuoteNode(symbol(axe*elt)))
+    return Expr(:(.), Symbol(parent), QuoteNode(Symbol(axe*elt)))
 end
 
 # create a list of chained "&&" Exprs
